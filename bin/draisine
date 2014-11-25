@@ -1,0 +1,6 @@
+#!/usr/bin/env node
+
+var draisine = require('../lib');
+var argv = require('yargs').argv;
+
+draisine(argv.from, argv.to, argv.on);
