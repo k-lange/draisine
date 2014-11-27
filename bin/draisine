@@ -2,5 +2,21 @@
 
 var draisine = require('../lib');
 var argv = require('yargs').argv;
+var table = require('easy-table');
 
-draisine(argv.from, argv.to, argv.on);
+draisine({
+    from: argv.from,
+    to: argv.to,
+    on: argv.on
+}, function (error, result) {
+    if (error) {
+        console.log(error);
+        return;
+    }
+
+    console.log('Found', result.length, 'results.');
+    if (result.length) {
+        console.log('');
+        console.log(table.printArray(result));
+    }
+});
