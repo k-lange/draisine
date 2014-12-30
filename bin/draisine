@@ -1,20 +1,34 @@
 #!/usr/bin/env node
 
-var draisine = require('../lib');
-var chrono = require('chrono-node');
-var moment = require('moment');
-var argv = require('yargs').argv;
-var table = require('easy-table');
+var draisine = require('../lib'),
+    chrono = require('chrono-node'),
+    moment = require('moment'),
+    table = require('easy-table'),
+    argv = require('yargs')
+        .options('f', {
+            alias: 'from',
+            demand: true
+        })
+        .options('t', {
+            alias: 'to',
+            demand: true
+        })
+        .options('o', {
+            alias: 'on',
+            default: 'tomorrow'
+        })
+        .usage('Usage: $0 -f [station] -t [station] -o [date]')
+        .argv;
 
 var options = {
-    from: argv.from || 'Hamburg Hbf',
-    to: argv.to || 'Berlin Hbf',
-    on: chrono.parseDate(argv.on || 'tomorrow')
+    from: argv.f,
+    to: argv.t,
+    on: chrono.parseDate(argv.o || 'tomorrow')
 };
 
 draisine(options, function (error, result) {
     if (error) {
-        console.log(error);
+        console.error(error);
         return;
     }
 
